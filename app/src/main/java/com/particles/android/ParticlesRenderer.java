@@ -86,6 +86,8 @@ public class ParticlesRenderer implements Renderer {
     };
     private final float[] modelViewMatrix = new float[16];
     private final float[] it_modelViewMatrix = new float[16];
+    private float xOffset;
+    private float yOffset;
 
     public ParticlesRenderer(Context context) {
         this.context = context;
@@ -201,7 +203,7 @@ public class ParticlesRenderer implements Renderer {
         rotateM(viewMatrix, 0, -yRotation, 1f, 0f, 0f);
         rotateM(viewMatrix, 0, -xRotation, 0f, 1f, 0f);
         System.arraycopy(viewMatrix, 0, viewMatrixForSkybox, 0, viewMatrix.length);
-        translateM(viewMatrix, 0, 0, -1.5f, -2.5f);
+        translateM(viewMatrix, 0, 0 - xOffset, -1.5f, -2.5f);
     }
 
     private void updateMvpMatrix() {
@@ -216,5 +218,10 @@ public class ParticlesRenderer implements Renderer {
     private void updateMvpMatrixForSkybox() {
         multiplyMM(tempMatrix, 0, viewMatrixForSkybox, 0, modelMatrix, 0);
         multiplyMM(modelViewProjectionMatrix, 0, projectionMatrix, 0, tempMatrix, 0);
+    }
+
+    public void handleOffsetsChanged(float xOffset) {
+        this.xOffset = (xOffset - 0.5f) * 2.5f;
+        updateViewMatrices();
     }
 }

@@ -64,7 +64,6 @@ public class ParticleSystem {
         particles[currentOffset++] = direction.z;
 
         particles[currentOffset++] = particleStartTime;
-
         vertextArray.updateBuffer(particles, particleOffset, TOTAL_COMPONENT_COUNT);
     }
 
